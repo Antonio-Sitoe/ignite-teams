@@ -1,17 +1,9 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import "@/constants/global.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
-import { useColorScheme } from "@/components/useColorScheme";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Loading } from "@/components/Loading";
 import { StatusBar } from "react-native";
 
 export {
@@ -45,22 +37,20 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return <Loading />;
+    return null;
   }
 
   return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StatusBar barStyle="light-content" translucent />
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+    <>
+      <Stack screenOptions={{ headerShown: false,  }} >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="newGroup" />
+        <Stack.Screen name="players" />
       </Stack>
-    </ThemeProvider>
+    </>
   );
 }
