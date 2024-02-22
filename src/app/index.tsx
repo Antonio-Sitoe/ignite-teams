@@ -6,14 +6,16 @@ import Header from "@/components/Header";
 import GroupCard from "@/components/GroupCard";
 import { Button } from "@/components/Button";
 import { useRouter } from "expo-router";
+import { groupsGetAll } from "@/storage/group/groupsGetAll";
 
 export default function Home() {
   const { push } = useRouter();
   const [groups, setGroups] = useState(["Rocket", "Galera do ignite"]);
 
   function handlePress() {
-    push("/players");
+    push("/newGroup");
   }
+
   return (
     <View className="flex-1 bg-GRAY_600 text-center p-6 pt-12">
       <StatusBar translucent barStyle={"light-content"} />

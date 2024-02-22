@@ -6,12 +6,18 @@ import { HighLigth } from "@/components/HighLigth";
 import { Input } from "@/components/Input";
 import { PlayerCard } from "@/components/PlayerCard";
 import theme from "@/theme";
+import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { FlatList, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type route = {
+  group: string;
+};
+
 export default function Players() {
   const [team, setTeam] = useState("Time A");
+  const { group } = useLocalSearchParams<route>();
   const [players, setPlayers] = useState("Rodrigo");
   return (
     <SafeAreaView
@@ -19,7 +25,7 @@ export default function Players() {
     >
       <Header showBackButton />
       <HighLigth
-        title="Nova Turma"
+        title={group}
         subtitle="crie uma turma para adicionar pessoas"
       />
       <View className=" w-full bg-GRAY_700 flex-row justify-center rounded-sm">
@@ -63,7 +69,7 @@ export default function Players() {
           paddingBottom: 100,
         }}
       />
-      <Button type="SECUNDARY" title="Remover a turma"/>
+      <Button type="SECUNDARY" title="Remover a turma" />
     </SafeAreaView>
   );
 }

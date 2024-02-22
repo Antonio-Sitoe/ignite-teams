@@ -4,7 +4,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
+import theme from "@/theme";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,12 +46,12 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <>
-      <Stack screenOptions={{ headerShown: false,  }} >
+    <View style={{ flex: 1 , backgroundColor:theme.COLORS.GRAY_600}}>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="newGroup" />
         <Stack.Screen name="players" />
       </Stack>
-    </>
+    </View>
   );
 }

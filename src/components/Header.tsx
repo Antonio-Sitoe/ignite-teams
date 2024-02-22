@@ -5,11 +5,13 @@ import { CaretLeft } from "phosphor-react-native";
 import { useRouter } from "expo-router";
 
 export default function Header({ showBackButton = false }) {
-  const { back } = useRouter();
+  const { push } = useRouter();
   return (
     <View className="w-full flex-row items-center justify-center">
       {showBackButton && (
-        <TouchableOpacity onPress={back} className="flex-1">
+        <TouchableOpacity onPress={()=>{
+          push('/')
+        }} className="flex-1">
           <CaretLeft color="white" size={32} />
         </TouchableOpacity>
       )}
