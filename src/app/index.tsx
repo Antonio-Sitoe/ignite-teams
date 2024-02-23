@@ -1,5 +1,5 @@
 import { FlatList, Text, View, StatusBar } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HighLigth } from "@/components/HighLigth";
 
 import Header from "@/components/Header";
@@ -16,6 +16,28 @@ export default function Home() {
     push("/newGroup");
   }
 
+  async function fetchGroups() {
+    try {
+      const data = await groupsGetAll();
+      setGroups(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleOpenGroups(group: string) {
+    push({
+      pathname: "/players",
+      params: {
+        group,
+      },
+    });
+  }
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
   return (
     <View className="flex-1 bg-GRAY_600 text-center p-6 pt-12">
       <StatusBar translucent barStyle={"light-content"} />
@@ -31,7 +53,9 @@ export default function Home() {
           }
         }
         renderItem={({ item }) => {
-          return <GroupCard title={item} />;
+          return (
+            <GroupCard title={item} onPress={() => handleOpenGroups(item)} />
+          );
         }}
         ListEmptyComponent={() => (
           <Text className="text-sm font-REGULAR text-GRAY_300 text-center">

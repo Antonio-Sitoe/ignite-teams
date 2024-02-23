@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import { HighLigth } from "@/components/HighLigth";
 import { Input } from "@/components/Input";
 import { PlayerCard } from "@/components/PlayerCard";
+import { groupCreate } from "@/storage/group/groupCreate";
+import { groupsGetAll } from "@/storage/group/groupsGetAll";
 import theme from "@/theme";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -19,6 +21,14 @@ export default function Players() {
   const [team, setTeam] = useState("Time A");
   const { group } = useLocalSearchParams<route>();
   const [players, setPlayers] = useState("Rodrigo");
+
+  async function getGroups() {
+    try {
+      await groupCreate(group);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: theme.COLORS.GRAY_600, padding: 24 }}

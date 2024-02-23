@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import { Input } from "@/components/Input";
@@ -9,14 +9,24 @@ import theme from "@/theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { groupCreate } from "@/storage/group/groupCreate";
+import { AppError } from "@/utils/AppError";
 
 const NewGroup = () => {
   const [group, setGroup] = useState("");
   const router = useRouter();
 
   async function handleNew() {
-    await groupCreate(group);
-    router.push({ pathname: "/players", params: { group } });
+    try {
+      await groupCreate(group);
+      router.push({ pathname: "/players", params: { group } });
+    } catch (error) {
+      if (error instanceof AppError) {
+        console.log("[ERROR]", error);
+        Alert.alert("Novo Grupo", error.message);
+      } else {
+        Alert.alert("Novo Grupo", "Nao foi possivel criar o novo grupo");
+      }
+    }
   }
   return (
     <SafeAreaView
